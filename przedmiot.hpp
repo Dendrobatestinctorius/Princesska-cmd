@@ -1,7 +1,9 @@
+//klasa operująca pojedynczymi elementami magazynu
+
 #include <iostream>
 #include <string>
 #include <fstream>
-#include <vector>
+
 
 using namespace std;
 
@@ -10,7 +12,7 @@ class przedmiot
 public:
 
     void wczytaj( string path );
-    void zapisz( string path );
+    void zapisz();
     void usun(string path );
     string getNazwa();
     void setNazwa( string n );
@@ -34,6 +36,8 @@ private:
 
 };
 
+void przedmiot::nowy()
+
 
 
 void przedmiot::wczytaj( string path )
@@ -41,26 +45,29 @@ void przedmiot::wczytaj( string path )
     ofstream plik( path.c_str );
     string ln;
     getline( plik, ln );
-    setNazwa( ln );
+    nazwa = ln;
     getline( plik, ln );
-    setKolor( ln );
+    kolor = ln;
     getline( plik, ln );
-    setCenaZ( stoi( ln ) );
+    cena_zakup = stoi( ln );
     getlina( plik, ln );
-    setCenaS( stoi( ln ) );
+    cena_sprzedaz = stoi( ln );
     getline( plik, ln );
-    setSztuki( stoi( ln ) );
+    sztuki = stoi( ln );
     plik.close();  
 }
 
-void przedmiot::zapisz( string path )
+void przedmiot::zapisz()
 {
-    ofstream plik( path.c_str, ofstream::trunc );
-    plik << getNazwa();
-    plik << getKolor();
-    plik << getCenaZ();
-    plik << getCenaS();
-    plik << getSztuki();
+    string nm = "Magazyn/";
+    nm.append( nazwa );
+    nm.append( ".p" );
+    ofstream plik( nm.c_str, ofstream::trunc );
+    plik << nazwa;
+    plik << kolor;
+    plik << cena_zakup;
+    plik << cena_sprzedaz;
+    plik << sztuki;
     plik.close();
 }
 
